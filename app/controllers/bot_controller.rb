@@ -42,8 +42,6 @@ class BotController < ApplicationController
 						not_meaningful_message = false
 				end
 			end
-
-			sleep(1)
 		end
 		redirect_to :controller => 'cities', :action => 'index', :locations => @locations
 	end
@@ -51,6 +49,5 @@ class BotController < ApplicationController
 	def callback
 		@text = params[:text]
 		Incomings.create(text: @text)
-		binding.pry
 	end
 end
