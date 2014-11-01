@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'bot#index'
-  get 'bot#callback'
+  get 'bot/callback' => 'bot#callback'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
