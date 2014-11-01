@@ -29,7 +29,8 @@ module CitiesHelper
 		end
 		distances = distances.sort_by{|element| element[:distance]}
 		distances = distances[0..num_results-1].map{|i| i[:id] }
-		distances.map{|id| City.find(id).city_state}
+		City.find(distances[0])
+		# distances.map{|id| City.find(id).city_state}
 	end
 
 	 def distance_between(point1, point2)
