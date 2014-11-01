@@ -28,7 +28,7 @@ class BotController < ApplicationController
 		binding.pry
 		if(Incomings.all.count == people_count)
 			binding.pry
-			redirect_to :controller => 'cities', :action => 'index'
+			redirect_to "/cities/index"
 		else
 			render :text => params.inspect
 		end
