@@ -29,6 +29,8 @@ class BotController < ApplicationController
 		@text = params[:text]
 		if @text == '/test'
 			redirect_to :controller => 'bot', :action => 'index'
+		else 
+			redirect_to :controller => 'bot', :action => 'callback'
 		end
 	end
 end
