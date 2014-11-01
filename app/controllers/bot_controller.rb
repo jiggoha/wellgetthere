@@ -15,10 +15,14 @@ class BotController < ApplicationController
 		end
 
 		if(Incomings.all.count != 0)
-			uri = URI('https://api.justyo.co/yo/')
+
 			Yo.all.each do |yo|
-				binding.pry
-				Net::HTTP.post_form(uri, { api_token: YO_API_KEY, username: yo.username })
+				uri = URI.parse('https://api.justyo.co/yo/')
+				req = Net::HTTP::Post.new(uri.path)
+				req.set_form_data({ api_token: YO_API_KEY, username: yo.username})
+				http = Net::HTTP.new(uri.host, uri.port)
+				http.use_ssl = true
+				response = http.request(req)
 			end
 		end
 
