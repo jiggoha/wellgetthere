@@ -2,8 +2,8 @@ class BotController < ApplicationController
 
 	def index
 		
-		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
-		people_count = @client.group(GROUP_ID).members.count
+		@client = GroupMe::Client.new(:token => ENV['ACCESS_TOKEN'])
+		people_count = @client.group(ENV['GROUP_ID']).members.count
 
 		not_all_replied = true
 		replies = 0
@@ -27,7 +27,7 @@ class BotController < ApplicationController
 						if replies == 1 and !@yoUserNames.empty?
 							uri = URI('https://api.justyo.co/yo/')
 							@yoUserNames.each do |yoUserName|
-								Net::HTTP.post_form(uri, api_token: YO_API_KEY, username: yoUserName)
+								Net::HTTP.post_form(uri, api_token: ENV['YO_API_KEY'], username: yoUserName)
 							end
 						end
 						if replies == people_count
@@ -42,6 +42,8 @@ class BotController < ApplicationController
 						not_meaningful_message = false
 				end
 			end
+
+			sleep(1)
 		end
 		redirect_to :controller => 'cities', :action => 'index', :locations => @locations
 	end
