@@ -12,6 +12,8 @@ class BotController < ApplicationController
 		not_all_replied = true
 		replies = 0
 		@locations = []
+		@yoUserNames = []
+
 		while(not_all_replied)
 			not_meaningful_message = true
 			@messages_number = @client.messages_count(GROUP_ID)
@@ -25,9 +27,20 @@ class BotController < ApplicationController
 
 						replies += 1
 
+						if replies == 1 and !@yoUserNames.null?
+							uri = URI('https://api.justyo.co/yo/')
+							@yoUserNames.each do |yoUserName|
+								Net::HTTP.post_form(uri, api_token: YO_API_KEY, username: yoUserName)
+							end
+							
+						end
+							
+						end
 						if replies == people_count
 							not_all_replied = false
 						end
+					elsif message.split()[0] == '/yo'
+						@yoUserNames.push(message.split()[1..-1].join(' '))						
 					end
 						not_meaningful_message = false
 				end
