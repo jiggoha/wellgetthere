@@ -1,7 +1,6 @@
 module CitiesHelper
 	def find_destination(places, num_results)
 		center = Geocoder::Calculations.geographic_center(places)
-		binding.pry
 		puts center
 		distances = []
 		City.all.each do |city|
@@ -13,7 +12,6 @@ module CitiesHelper
 			end
 
 		end
-		binding.pry
 		distances = distances.sort_by{|element| element[:distance]}
 		distances[0..num_results].map{|i| i[:id] }
 	end
