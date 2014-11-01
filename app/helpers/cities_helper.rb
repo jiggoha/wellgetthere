@@ -1,15 +1,20 @@
 module CitiesHelper
-	def find_destination(places, distance)
+	def find_destination(places, num_results)
 		center = Geocoder::Calculations.geographic_center(places)
-		box = Geocoder::Calculations.bounding_box(center, distance)
-		destinations = City.within_bounding_box(box)
-		if destinations.empty?
-			distance += 20
-			find_destination(places, distance)
-		elsif destinations.kind_of?(Array)
-			destinations[0]
-		else
-			destinations
+		binding.pry
+		puts center
+		distances = []
+		City.all.each do |city|
+			distance = Geocoder::Calculations.distance_between(center, [city.latitude, city.longitude])
+			if !distance.nan?
+				distances << {id: city.id, distance: distance}
+			else
+				puts city.name
+			end
+
 		end
+		binding.pry
+		distances = distances.sort_by{|element| element[:distance]}
+		distances[0..num_results].map{|i| i[:id] }
 	end
 end
