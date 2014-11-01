@@ -5,8 +5,9 @@ class BotController < ApplicationController
 	BOT_ID_JIMGYM = "53a81761fcf30e3146a9957c5a"
 
 	def index
-		# @client = GroupMe::Client.new(:token => ACCESS_TOKEN)
-
+		
+		 @client = GroupMe::Client.new(:token => ACCESS_TOKEN)
+		 
 		# noMeaningfulMessage = true
 		# while(noMeaningfulMessage)
 		# 	noNewMessage = true
@@ -25,8 +26,9 @@ class BotController < ApplicationController
 	end
 
 	def callback
-		@text = params["text"]
-		puts params.inspect
-		render :text => params.inspect
+		@text = params[:text]
+		if @text == '/test'
+			redirect_to :controller => 'bot', :action => 'index'
+		end
 	end
 end
