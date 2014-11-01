@@ -10,13 +10,19 @@ gem 'faraday_middleware'
 gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
 group :development, :test do
-	gem 'sqlite3'
+	gem 'capistrano', '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1.1'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano-unicorn-nginx', '~> 2.0'
+  gem 'capistrano-postgresql', '~> 3.0'
 end
 
 group :production do
-  gem 'pg'
- 	gem 'rails_12factor'
+	gem'pg'
+	gem 'rails12_factor'
 end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
