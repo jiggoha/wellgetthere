@@ -18,7 +18,7 @@ class BotController < ApplicationController
 			uri = URI('https://api.justyo.co/yo/')
 			Yo.all.each do |yo|
 				binding.pry
-				Net::HTTP.post_form(uri, api_token: YO_API_KEY, username: yo.username)
+				Net::HTTP.post_form(uri, { api_token: YO_API_KEY, username: yo.username })
 			end
 		end
 
