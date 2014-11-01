@@ -10,7 +10,7 @@ class CitiesController < ApplicationController
 		end
 
 		@resultingPlaces = find_destination(@locations, 3)
-		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
+		@client = GroupMe::Client.new(:token => ENV['ACCESS_TOKEN'])
 		@counter = 1
 		if !@resultingPlaces.empty?
 			@resultingPlaces.each do |nameOfPlace|
