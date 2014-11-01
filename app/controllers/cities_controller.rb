@@ -1,8 +1,9 @@
 class CitiesController < ApplicationController
 	include CitiesHelper
+	include BotHelper
 
 	def index
-
+			welcome_message = "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. \“I can’t make it\” is not an acceptable answer."
 			@locations = []
 
 			Incomings.all.each do |incoming|
@@ -17,19 +18,22 @@ class CitiesController < ApplicationController
 				y.destroy
 			end
 
-			@resultingPlaces = find_destination(@locations, 3)
+			@resultingPlaces = find_destination(@locations, 1)
 			@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 			@counter = 1
 			if !@resultingPlaces.empty?
 				@resultingPlaces.each do |nameOfPlace|
 					sleep(2)
-
+					priceline = get_hotel_information(nameOfPlace, Date.new(2014, 11, 7), 3)
+					priceline_link = priceline[0]
+					priceline_cost = priceline[1]
+					bot_message = "All right, the best place to meet up is " + nameOfPlace+ "\“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for " + number_to_currency(priceline_cost, :unit => "$") + ": " + priceline_link
 					uri = URI(BASE_URL + '/bots/post')
-					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Calculated option number " + @counter.to_s + ": " + nameOfPlace + "\n"})
+					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message})
 
 					#@client.create_message(ENV['GROUP_ID'], "Calculated option number " + @counter.to_s + ": " + nameOfPlace + "\n")
 
-					@counter += 1
+					# @counter += 1
 				end
 			end
 	end
