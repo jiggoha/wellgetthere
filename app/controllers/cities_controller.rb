@@ -17,8 +17,9 @@ class CitiesController < ApplicationController
 			Yo.all.each do |y|
 				y.destroy
 			end
-
+			puts "Starting find_destination function"
 			@resultingPlaces = find_destination(@locations, 1)
+			puts "Done with find_destination function"
 			@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 			@counter = 1
 			if !@resultingPlaces.empty?
