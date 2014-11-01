@@ -3,8 +3,6 @@ source 'https://rubygems.org'
 gem 'groupme'
 gem 'pry'
 gem 'json'
-gem 'faraday'
-gem 'faraday_middleware'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
@@ -26,7 +24,6 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 gem 'geocoder'
-gem 'pry'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

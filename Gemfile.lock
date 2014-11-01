@@ -141,8 +141,6 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
-  faraday
-  faraday_middleware
   geocoder
   groupme
   jbuilder (~> 2.0)
