@@ -20,7 +20,7 @@ class CitiesController < ApplicationController
 			@resultingPlaces = find_destination(@locations, 1)
 			@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 			@counter = 1
-			if !@resultingPlaces.empty?
+			if !@resultingPlaces.nil?
 				@resultingPlaces.each do |nameOfPlace|
 					sleep(2)
 					priceline = get_hotel_information(nameOfPlace, Date.new(2014, 11, 7), 3)
