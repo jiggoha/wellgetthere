@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
 	include CitiesHelper
-	include BotHelper
+	#include BotHelper
 
 	def index
 			welcome_message = "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. \“I can’t make it\” is not an acceptable answer."
