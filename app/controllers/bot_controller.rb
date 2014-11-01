@@ -44,7 +44,7 @@ class BotController < ApplicationController
 			sleep(0.5)
 			end
 		end
-
+		redirect_to :controller => 'cities', :action => 'index'
 	end
 
 	def callback
