@@ -4,7 +4,7 @@ class CitiesController < ApplicationController
 	def index
 		@locations = params[:locations]	
 		
-		@resultingPlaces = find_destination(@locations, 7endend)
+		@resultingPlaces = find_destination(@locations, 3)
 		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 		@counter = 1
 		if !@resultingPlaces.empty?
