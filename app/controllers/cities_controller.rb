@@ -3,12 +3,12 @@ class CitiesController < ApplicationController
 
 	def index
 		@locations = params[:locations]	
-		
 		@resultingPlaces = find_destination(@locations, 3)
 		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 		@counter = 1
 		if !@resultingPlaces.empty?
 			@resultingPlaces.each do |nameOfPlace|
+				sleep(0.5)
 				@client.create_message(GROUP_ID, "Calculated option number " + @counter.to_s + ": " + nameOfPlace + "\n")
 				@counter += 1
 			end

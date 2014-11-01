@@ -16,3 +16,5 @@
 /tmp
 
 /config/initializers/access_token.rb
+/config/initializers/groupMe_information.rb
+/config/initializers/yo_credentials.rb

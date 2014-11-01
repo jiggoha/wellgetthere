@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'groupme'
 gem 'pry'
 gem 'json'
+gem 'faraday'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
