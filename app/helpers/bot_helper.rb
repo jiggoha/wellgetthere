@@ -7,6 +7,6 @@ module BotHelper
 		appended = '/api/hotelretail/listing/v3/' + city.latitude.to_s + ',' + city.longitude.to_s + '/' + date.to_s(:number) + '/' + (date+duration).to_s(:number) + '/1/1?sort=2'
 		response = connection.get(appended)
 		id = response.body["hotels"].keys[0]
-		"http://www.priceline.com/hotel/hotelOverviewGuide.do?propID=" + id.to_s
+		return "http://www.priceline.com/hotel/hotelOverviewGuide.do?propID=" + id.to_s, response.body["hotels"].first[1]["merchPrice"]
 	end
 end
