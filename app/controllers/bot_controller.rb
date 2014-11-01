@@ -8,9 +8,9 @@ class BotController < ApplicationController
 		people_count = @client.group(ENV['GROUP_ID']).members.count
 		@message = params[:text]
 
-		if message.split()[0] == '/location'
+		if @message.split()[0] == '/location'
 			Incomings.create(text: @message.split()[1..-1].join(' '))
-		elsif message.split()[0] == '/yo'
+		elsif @message.split()[0] == '/yo'
 			Yo.create(username: @message.split()[1..-1].join(' '))
 		end
 
