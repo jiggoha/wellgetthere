@@ -1,6 +1,12 @@
 module CitiesHelper
-	def find_destination(places, num_results)
-		center = Geocoder::Calculations.geographic_center(places)
+
+	def get_coordinates(place)
+		data = Geocoder.search(place)
+		data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
+	end
+
+	def find_destination(coordinates, num_results)
+		center = Geocoder::Calculations.geographic_center(coordinates)
 		distances = []
 		City.all.each do |city|
 			distance = Geocoder::Calculations.distance_between(center, [city.latitude, city.longitude])
