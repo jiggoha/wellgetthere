@@ -6,8 +6,8 @@ class BotController < ApplicationController
 
 	def index
 		
-		 @client = GroupMe::Client.new(:token => ACCESS_TOKEN)
-		 
+		 #@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
+
 		# noMeaningfulMessage = true
 		# while(noMeaningfulMessage)
 		# 	noNewMessage = true
