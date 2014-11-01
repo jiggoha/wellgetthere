@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'csv'
+
+cities = CSV.read('cities.csv', :encoding => 'windows-1251:utf-8', :headers => true)
+
+cities.each do |city|
+	City.create(name: city['name'], state: city['state'], population: city['population'])
+end
