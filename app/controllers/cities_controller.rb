@@ -25,7 +25,7 @@ class CitiesController < ApplicationController
 					priceline = get_hotel_information(@resultingPlace, Date.new(2014, 11, 7), 3)
 					priceline_link = priceline[0]
 					priceline_cost = priceline[1]
-					bot_message = "All right, the best place to meet up is " + @resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for " + number_to_currency(priceline_cost, :unit => "$") + ": " + priceline_link
+					bot_message = "All right, the best place to meet up is " + @resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for $" + priceline_cost.round(3) + ": " + priceline_link
 					uri = URI(BASE_URL + '/bots/post')
 					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message})
 
