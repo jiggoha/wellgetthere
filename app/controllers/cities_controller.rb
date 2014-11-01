@@ -14,7 +14,7 @@ class CitiesController < ApplicationController
 		@counter = 1
 		if !@resultingPlaces.empty?
 			@resultingPlaces.each do |nameOfPlace|
-				sleep(0.5)
+				sleep(15)
 				@client.create_message(GROUP_ID, "Calculated option number " + @counter.to_s + ": " + nameOfPlace + "\n")
 				@counter += 1
 			end
