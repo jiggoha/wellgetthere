@@ -25,7 +25,8 @@ class BotController < ApplicationController
 	end
 
 	def callback
-		client = GroupMe::Client.new(:token => ACCESS_TOKEN)
+		acasd = "hqVmOz5WKwcEaIt7m7WJicymI0LVyTRbDszRn8Ou"
+		client = GroupMe::Client.new(:token => acasd)
 		client.bot(BOT_ID_GetMeThere)
 		@text = params["text"]
 		puts params.inspect
