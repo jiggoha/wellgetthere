@@ -8,8 +8,8 @@
 
 require 'csv'
 
-cities = CSV.read('cities.csv', :encoding => 'windows-1251:utf-8', :headers => true)
-
-cities.each do |city|
-	City.create(name: city['name'], state: city['state'], population: city['population'])
+csv = CSV.read(File.join(Rails.root, "db", "cities.csv"), :encoding => 'windows-1251:utf-8', :headers => true)
+csv.each do |city|
+	City.find_or_create_by(name: city['City'].strip, state: city['State'].strip, population: city['Population'].gsub(',', '').to_i)
+	sleep(1)
 end

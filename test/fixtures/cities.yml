@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  population: 1
+  state: MyString
+  latitude: 1.5
+  longitude: 1.5
+
+two:
+  name: MyString
+  population: 1
+  state: MyString
+  latitude: 1.5
+  longitude: 1.5
