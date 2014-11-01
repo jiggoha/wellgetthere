@@ -2,7 +2,11 @@ class CitiesController < ApplicationController
 	include CitiesHelper
 
 	def index
-		@locations = params[:locations]	
+		@locations = []
+
+		Incomings.all.each do |incoming|
+			@locations.push(incoming.text)
+		end
 		
 		@resultingPlaces = find_destination(@locations, 3)
 		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
@@ -13,5 +17,7 @@ class CitiesController < ApplicationController
 				@counter += 1
 			end
 		end
+		Incomings.all.destroy
+		Yo.all.destroy
 	end
 end
