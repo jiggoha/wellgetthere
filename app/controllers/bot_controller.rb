@@ -5,23 +5,36 @@ class BotController < ApplicationController
 	BOT_ID_JIMGYM = "53a81761fcf30e3146a9957c5a"
 
 	def index
+		
 		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
+		people_count = @client.group(GROUP_ID).members.count
 
-		noMeaningfulMessage = true
-		while(noMeaningfulMessage)
-			noNewMessage = true
+		not_all_replied = true
+		replies = 0
+		@locations = []
+		while(not_all_replied)
+			not_meaningful_message = true
 			@messages_number = @client.messages_count(GROUP_ID)
 
-			while(noNewMessage)
+			while(not_meaningful_message)
 				if(@messages_number < @client.messages_count(GROUP_ID))
-					if @client.messages(GROUP_ID)[0][:text] == '/test'
-						noMeaningfulMessage = false
+
+					message = @client.messages(GROUP_ID)[0][:text]
+					if message.split()[0] == '/location'
+						@locations.push(message.split()[1..-1].join(' '))
+
+						replies += 1
+
+						if replies == people_count
+							not_all_replied = false
+						end
 					end
-						noNewMessage = false
+						not_meaningful_message = false
 				end
 			sleep(0.5)
 			end
 		end
+
 	end
 
 	def callback
