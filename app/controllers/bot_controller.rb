@@ -12,10 +12,27 @@ class BotController < ApplicationController
 			Incomings.create(text: @message.split()[1..-1].join(' '))
 		elsif @message.split()[0] == '/yo'
 			Yo.create(username: @message.split()[1..-1].join(' '))
+		elsif @message.start_with?('/hi')
+			uri = URI(BASE_URL + '/bots/post')
+			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. “I can’t make it” is not an acceptable answer. (Begin your answer with \\location, followed by your city.)"})
+		elsif @message.start_with?('/help')
+			uri = URI(BASE_URL + '/bots/post')
+			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere,
+									  text: "Here's all the commands you can give me:
+									  		\n/hi: Start planning a trip. 	
+									  		\n/yo <username>: Add a username to be notified by Yo of all messages in the chat.
+									        \n/location <your location>: tell me your location so I can plan the trip.
+									        \n/undo: if you made a mistake in your last message, tell me and I'll get rid of it.
+									        \n/startover: if you guys really messed up, let me know and we'll start the whole thing over."}
+		elsif @message.start_with?('/undo')
+			Incomings.last.destroy
+		elsif @message.start_with?('/startover')
+			Incomings.all.each do |incoming|
+				incoming.destroy
+			end							
 		end
-
+		# Once one person has answered, everyone signed up for yo gets a yo as a reminder
 		if(Incomings.all.count != 0)
-
 			Yo.all.each do |yo|
 				uri = URI.parse('https://api.justyo.co/yo/')
 				req = Net::HTTP::Post.new(uri.path)
