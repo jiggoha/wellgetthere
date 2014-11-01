@@ -25,7 +25,7 @@ class BotController < ApplicationController
 	end
 
 	def callback
-		@text = params[:text]
+		@text = params["text"]
 		render :text => @text
 	end
 end
