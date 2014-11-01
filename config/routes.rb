@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'bot#index'
 
-  get 'bot/callback' => 'bot#callback'
+  # get 'bot/callback' => 'bot#callback'
   post 'bot/callback' => 'bot#callback'
   get 'cities/index' => 'cities#index'
   # The priority is based upon order of creation: first created -> highest priority.
