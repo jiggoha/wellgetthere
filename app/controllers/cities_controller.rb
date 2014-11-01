@@ -3,6 +3,7 @@ class CitiesController < ApplicationController
 	include BotHelper
 
 	def index
+		binding.pry
 			welcome_message = "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. \“I can’t make it\” is not an acceptable answer."
 			@locations = []
 
