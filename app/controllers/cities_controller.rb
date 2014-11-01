@@ -32,7 +32,7 @@ class CitiesController < ApplicationController
 					#@client.create_message(ENV['GROUP_ID'], "Calculated option number " + @counter.to_s + ": " + nameOfPlace + "\n")
 
 					# @counter += 1
-				end
+				
 			end
 	end
 end
