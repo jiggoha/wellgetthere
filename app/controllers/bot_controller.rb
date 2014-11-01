@@ -25,9 +25,7 @@ class BotController < ApplicationController
 				response = http.request(req)
 			end
 		end
-		binding.pry
 		if(Incomings.all.count == people_count)
-			binding.pry
 			redirect_to "/cities/index"
 		else
 			render :text => params.inspect

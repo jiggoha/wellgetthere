@@ -3,7 +3,6 @@ class CitiesController < ApplicationController
 	#include BotHelper
 
 	def index
-			binding.pry
 			welcome_message = "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. \“I can’t make it\” is not an acceptable answer."
 			@locations = []
 
@@ -18,9 +17,7 @@ class CitiesController < ApplicationController
 			Yo.all.each do |y|
 				y.destroy
 			end
-			binding.pry
 			@resultingPlaces = find_destination(@locations, 1)
-			binding.pry
 			@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 			@counter = 1
 			if !@resultingPlaces.empty?
