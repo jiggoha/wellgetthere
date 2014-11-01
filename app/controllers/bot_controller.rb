@@ -30,6 +30,7 @@ class BotController < ApplicationController
 		if @text == '/test'
 			redirect_to :controller => 'bot', :action => 'index'
 		else 
+			sleep(1)
 			redirect_to :controller => 'bot', :action => 'callback'
 		end
 	end
