@@ -1,4 +1,23 @@
 module CitiesHelper
+	def get_restaurant(client, city)
+		location = {longitude: city.longitude, latitude: city.latitude}
+		params = { term: 'food',
+		           limit: 1,
+		           category_filter: 'restaurants'
+		         }
+		locale = { lang: 'en' }
+		client.search(location, params, locale)
+	end
+
+	def get_entertainment(client, city)
+		location = {longitude: city.longitude, latitude: city.latitude}
+		params = { term: 'Arts & Entertainment',
+		           limit: 1,
+		         }
+		locale = { lang: 'en' }
+		client.search(location, params, locale)
+	end
+
 	def get_hotel_information(city, date, duration)
 		connection = Faraday.new('http://www.priceline.com') do |conn|
 			conn.response :json, :content_type => 'application/json'
@@ -9,6 +28,11 @@ module CitiesHelper
 		id = response.body["hotels"].keys[0]
 		return "http://www.priceline.com/hotel/hotelOverviewGuide.do?propID=" + id.to_s, response.body["hotels"].first[1]["merchPrice"]
 	end
+
+	def get_coordinates(place)
+		data = Geocoder.search(place)
+		data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
+  end
 
 	def getMapUrl (coordinates)
 		center = Geocoder::Calculations.geographic_center(coordinates)
