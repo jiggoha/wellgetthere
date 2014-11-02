@@ -54,7 +54,7 @@ class BotController < ApplicationController
 				response = http.request(req)
 			end
 		end
-		if(Incomings.where(state: "confirmed").count == people_count)
+		if(Incomings.all.count == people_count)
 			redirect_to "/cities/index"
 		else
 			render :text => params.inspect
