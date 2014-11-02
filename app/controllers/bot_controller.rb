@@ -23,10 +23,7 @@ class BotController < ApplicationController
 									  		\n/yo <username>: Add a username to be notified by Yo of all messages in the chat."})
 			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text:
 									        "\n/location <your location>: tell me your location so I can plan the trip.
-									        \n/undo: if you made a mistake in your last message, tell me and I'll get rid of it.
 									        \n/startover: if you guys really messed up, let me know and we'll start the whole thing over."})
-		elsif @message.start_with?('/undo')
-			Incomings.last.destroy
 		elsif @message.start_with?('/startover')
 			Incomings.all.each do |incoming|
 				incoming.destroy
