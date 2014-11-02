@@ -32,6 +32,20 @@ module CitiesHelper
 	def get_coordinates(place)
 		data = Geocoder.search(place)
 		data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
+  end
+
+	def getMapUrl (coordinates)
+		center = Geocoder::Calculations.geographic_center(coordinates)
+		urlString = "https://maps.googleapis.com/maps/api/staticmap?"
+		urlString += "center=" + center[0].to_s + "," + center[1].to_s
+		urlString += "&markers=color:red%7C" + center[0].to_s + "," + center[1].to_s
+		
+		coordinates.each do |x|
+			urlString += "&markers=color:blue%7C" + x.gsub(' ','+')
+		end
+
+		urlString.chomp!(',')
+		urlString += "&size=400x400&maptype=satellite"		
 	end
 
 	def find_destination(coordinates, num_results)
@@ -39,6 +53,7 @@ module CitiesHelper
 		distances = []
 		City.all.each do |city|
 			distance = distance_between(center, [city.latitude, city.longitude])
+			binding.pry
 			if !distance.nan?
 				distances << {id: city.id, distance: distance}
 			else
