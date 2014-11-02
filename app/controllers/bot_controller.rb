@@ -18,7 +18,7 @@ class BotController < ApplicationController
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Thanks, " + name + "! I've got your location as " + result.name })
 			else
 				output_text = "Could you be more specific? Do you mean one of the following: "
-				ending = min{|3, result.length|}
+				ending = [3, result.length].min
 				result[0..ending].each do |city|
 					output_text += "\n"
 					output_text += city.name
