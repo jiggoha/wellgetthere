@@ -16,7 +16,6 @@ class BotController < ApplicationController
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Sure you typed that right? I couldn't find " + location + "."})
 			elsif result.length == 1	
 				Incomings.create(text: result[0][:name], state: "confirmed")
-				binding.pry
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Thanks, " + params[:name] + "! I've got your location as " + result[0][:name] })
 			else
 				output_text = "Could you be more specific? Do you mean one of the following: "
