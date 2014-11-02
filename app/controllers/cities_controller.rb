@@ -32,10 +32,9 @@ class CitiesController < ApplicationController
 					priceline_link = priceline[0]
 					priceline_cost = priceline[1]
 
-					bot_message = "All right, the best place to meet up is " + @resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for $" + priceline_cost.round(3).to_s + ": " + priceline_link + "." + "Here is a good restaurant in the area: " + restaurant.name + ", and here is a great " + entertainment.type[0].gsub('_',' ') + ': ' + entertainment.name + '.'
+					bot_message = "All right, the best place to meet up is " + @resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a very affordable hotel room at Priceline here for $" + priceline_cost.round(3).to_s + ": " + priceline_link + "." + "Here is a good restaurant in the area: " + restaurant.name + ", and here is a great " + entertainment.type[0].gsub('_',' ') + ': ' + entertainment.name + '.'
 
 					uri = URI(BASE_URL + '/bots/post')
 					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message, picture_url: @pictureUrl})
-					binding.pry				
 	end
 end
