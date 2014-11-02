@@ -4,10 +4,10 @@ class CitiesController < ApplicationController
 
 	def index
 			welcome_message = "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. \“I can’t make it\” is not an acceptable answer."
-			@locations = []
+			locations = []
 
 			Incomings.all.each do |incoming|
-				@locations.push(incoming.text)
+				locations.push(incoming.text)
 			end
 
 			Incomings.all.each do |i|
@@ -18,14 +18,13 @@ class CitiesController < ApplicationController
 				y.destroy
 			end
 
-			@resultingPlace = find_destination(@locations, 1)
-			@pictureUrl = getMapUrl(@locations)
+			resultingPlace = find_destination(locations, 1)
+			@pictureUrl = getMapUrl(locations)
 
 			groupme_client = GroupMe::Client.new(:token => ACCESS_TOKEN)
-			@counter = 1
-			#if !@resultingPlace.nil?
+			#if !resultingPlace.nil?
 					sleep(2)
-					priceline = get_hotel_information(@resultingPlace, Date.new(2014, 11, 7), 3)
+					priceline = get_hotel_information(resultingPlace, Date.new(2014, 11, 7), 3)
 					priceline_link = priceline[0]
 					priceline_cost = priceline[1]
 
@@ -35,17 +34,14 @@ class CitiesController < ApplicationController
 					# 						  	                token_secret: TOKEN_SECRET
 					# 					      		          })
 
-					# restaurant = get_restaurant(yelp_client, @resultingPlace)[0]
-					# entertainment = get_entertainment(yelp_client, @resultingPlace)[0]
+					# restaurant = get_restaurant(yelp_client, resultingPlace)[0]
+					# entertainment = get_entertainment(yelp_client, resultingPlace)[0]
 
-					bot_message = "All right, the best place to meet up is " + @resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for $" + priceline_cost.round(3).to_s + ": " + priceline_link + "." 
+					bot_message = "All right, the best place to meet up is " + resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for $" + priceline_cost.round(3).to_s + ": " + priceline_link + "." 
 					# "Here is a good restaurant to go to: " + restuarant.name + " (" + restuarant.mobile_url + ")" + " and here is a good entertainment site: " + entertainment.name + " (" + entertainment.mobile_url + ")"
 
 					uri = URI(BASE_URL + '/bots/post')
 					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message, picture_url: @pictureUrl})
-
-
-					# @counter += 1
 				
 			#end
 	end
