@@ -34,6 +34,7 @@ module CitiesHelper
 		distances = []
 		City.all.each do |city|
 			distance = distance_between(center, [city.latitude, city.longitude])
+			binding.pry
 			if !distance.nan?
 				distances << {id: city.id, distance: distance}
 			else
