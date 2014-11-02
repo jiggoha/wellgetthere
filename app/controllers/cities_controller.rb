@@ -14,6 +14,8 @@ class CitiesController < ApplicationController
 				i.destroy
 			end
 
+			puts Incomings.all.count
+
 			Yo.all.each do |y|
 				y.destroy
 			end
