@@ -1,7 +1,7 @@
 module CitiesHelper
 
 	def get_restaurant(client, city)
-		client.spots(city.longitude, city.latitude, :types => 'restaurants')[0]
+		client.spots(city.longitude, city.latitude, :types => ['restaurants','food'])[0]
 	end
 
 	def get_entertainment(client, city)
