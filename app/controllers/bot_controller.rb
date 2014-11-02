@@ -10,7 +10,8 @@ class BotController < ApplicationController
 		uri = URI(BASE_URL + '/bots/post')
 		if @message.split()[0] == '\\location'
 			location = @message.split()[1..-1].join(' ')
-			result = get_coordinates(location)
+			data = Geocoder.search(place)
+			result = data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
 			if result.length == 0
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Sure you typed that right? I couldn't find " + location + "."})
 			elsif result.length == 1	
@@ -28,7 +29,7 @@ class BotController < ApplicationController
 		elsif @message.split()[0] == '\\yo'
 			Yo.create(username: @message.split()[1..-1].join(' '))
 		elsif @message.start_with?('\\hi')
-			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Time for a road trip! Tell me your location so I can figure out the best place for everyone to meet. “I can’t make it” is not an acceptable answer. (Begin your answer with /location, followed by your city.)"})
+			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Time for a road trip! Tell me your location so I can figure out the best place for everyone to meet. “I can’t make it” is not an acceptable answer. (Begin your answer with \\location, followed by your city.)"})
 		elsif @message.start_with?('\\help')
 			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere,
 									  text: "Here's all the commands you can give me:
