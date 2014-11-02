@@ -62,5 +62,6 @@ class BotController < ApplicationController
 				render :text => params.inspect
 			end
 		end
+		render :text => params.inspect
 	end
 end
