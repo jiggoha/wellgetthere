@@ -1,21 +1,11 @@
 module CitiesHelper
+
 	def get_restaurant(client, city)
-		location = {longitude: city.longitude, latitude: city.latitude}
-		params = { term: 'food',
-		           limit: 1,
-		           category_filter: 'restaurants'
-		         }
-		locale = { lang: 'en' }
-		client.search(location, params, locale)
+		client.spots(city.longitude, city.latitude, :types => 'restaurants')[0]
 	end
 
 	def get_entertainment(client, city)
-		location = {longitude: city.longitude, latitude: city.latitude}
-		params = { term: 'Arts & Entertainment',
-		           limit: 1,
-		         }
-		locale = { lang: 'en' }
-		client.search(location, params, locale)
+		place = client.spots(city.longitude, city.latitude, :types=>['museum','art_gallery','campground','amusement_park','aquarium','zoo'])[0]
 	end
 
 	def get_hotel_information(city, date, duration)

@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-# gem 'yelp', require: 'yelp'
+ gem 'yelp', '2.0.3'
 gem 'groupme'
 gem 'pry'
 gem 'json'
 gem 'thin'
 gem 'rb-readline'
+gem 'google_places'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
