@@ -57,9 +57,9 @@ class BotController < ApplicationController
 				end
 			end
 			if(Incomings.all.count == people_count)
-				redirect_to "/cities/index"
+				redirect_to "/cities/index" and return
 			end
 		end
-		render :text => params.inspect
+		render :text => params.inspect and return
 	end
 end
