@@ -11,10 +11,20 @@ class BotController < ApplicationController
 		if @message.split()[0] == '\\location'
 			location = @message.split()[1..-1].join(' ')
 			data = Geocoder.search(location)
-			result = data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
+			new_data = []
+			data.each do |datum|
+				datum.data[:address_components].each do |sub_entry|
+					if sub["types"] == ["country", "political"]
+						if sub["long_name"] == "United States"
+							new_data << datum
+						end
+					end
+				end
+			end
+			result = new_data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
 			if result.length == 0
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Sure you typed that right? I couldn't find " + location + "."})
-			elsif result.length == 1	
+			elsif result.length == 1
 				Incomings.create(text: result[0][:name], state: "confirmed")
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Thanks, " + params[:name] + "! I've got your location as " + result[0][:name] })
 			else

@@ -62,6 +62,7 @@ module CitiesHelper
 		end
 		distances = distances.sort_by{|element| element[:distance]}
 		distances = distances[0..num_results-1].map{|i| i[:id] }
+		# returns city object
 		City.find(distances[0])
 		# distances.map{|id| City.find(id).city_state}
 	end
