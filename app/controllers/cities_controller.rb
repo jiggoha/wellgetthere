@@ -4,10 +4,10 @@ class CitiesController < ApplicationController
 
 	def index
 			welcome_message = "Time for a road trip! Tell me where you’re at so I can tell you where to meet up. \“I can’t make it\” is not an acceptable answer."
-			@locations = []
+			locations = []
 
 			Incomings.all.each do |incoming|
-				@locations.push(incoming.text)
+				locations.push(incoming.text)
 			end
 
 			Incomings.all.each do |i|
@@ -18,8 +18,8 @@ class CitiesController < ApplicationController
 				y.destroy
 			end
 
-			@resultingPlace = find_destination(@locations, 1)
-			@pictureUrl = getMapUrl(@locations)
+			@resultingPlace = find_destination(locations, 1)
+			@pictureUrl = getMapUrl(locations)
 
 			google_places_client = GooglePlaces::Client.new(GOOGLE_PLACES_API_KEY)
 			restaurant = get_restaurant(google_places_client, @resultingPlace)
@@ -37,9 +37,6 @@ class CitiesController < ApplicationController
 
 					uri = URI(BASE_URL + '/bots/post')
 					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message, picture_url: @pictureUrl})
-
-
-					# @counter += 1
 				
 			end
 	end

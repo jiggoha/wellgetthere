@@ -4,6 +4,7 @@ class BotController < ApplicationController
 	end
 
 	def callback
+		puts Incomings.all.count
 		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 		people_count = @client.group(GROUP_ID).members.count
 		@message = params[:text]
