@@ -23,7 +23,7 @@ class CitiesController < ApplicationController
 
 			groupme_client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 			@counter = 1
-			if !@resultingPlace.nil?
+			#if !@resultingPlace.nil?
 					sleep(2)
 					priceline = get_hotel_information(@resultingPlace, Date.new(2014, 11, 7), 3)
 					priceline_link = priceline[0]
@@ -47,6 +47,6 @@ class CitiesController < ApplicationController
 
 					# @counter += 1
 				
-			end
+			#end
 	end
 end
