@@ -51,6 +51,7 @@ module CitiesHelper
 	def find_destination(coordinates, num_results)
 		center = Geocoder::Calculations.geographic_center(coordinates)
 		distances = []
+		binding.pry
 		City.all.each do |city|
 			distance = distance_between(center, [city.latitude, city.longitude])
 			if !distance.nan?

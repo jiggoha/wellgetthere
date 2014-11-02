@@ -16,6 +16,7 @@ class BotController < ApplicationController
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Sure you typed that right? I couldn't find " + location + "."})
 			elsif result.length == 1	
 				Incomings.create(text: result[0][:name], state: "confirmed")
+				binding.pry
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Thanks, " + params[:name] + "! I've got your location as " + result[0][:name] })
 			else
 				output_text = "Could you be more specific? Do you mean one of the following: "
@@ -38,11 +39,11 @@ class BotController < ApplicationController
 			Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text:
 									        "\n\\location <your location>: tell me your location so I can plan the trip.
 									        \n\\startover: if you guys really messed up, let me know and we'll start the whole thing over."})
-		elsif @message.start_with?('\\startover')
-			Incomings.all.each do |incoming|
-				incoming.destroy
-			end							
 		end
+		# elsif @message.start_with?('\\startover')
+		# 	Incomings.all.each do |incoming|
+		# 		incoming.destroy
+		# 	end							
 		# Once one person has answered, everyone signed up for yo gets a yo as a reminder
 		if(Incomings.all.count != 0)
 			Yo.all.each do |yo|
