@@ -25,7 +25,6 @@ class BotController < ApplicationController
 				end
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text:  output_text})
 			end
-		end
 		elsif @message.split()[0] == '\\yo'
 			Yo.create(username: @message.split()[1..-1].join(' '))
 		elsif @message.start_with?('\\hi')
