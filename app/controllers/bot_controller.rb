@@ -4,6 +4,7 @@ class BotController < ApplicationController
 	end
 
 	def callback
+		puts Incomings.all.count
 		@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 		people_count = @client.group(GROUP_ID).members.count
 		@message = params[:text]
@@ -55,7 +56,6 @@ class BotController < ApplicationController
 			end
 		end
 		if(Incomings.all.count == people_count)
-			people_count = 0
 			redirect_to "/cities/index"
 		else
 			render :text => params.inspect
