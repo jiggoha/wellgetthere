@@ -10,4 +10,9 @@ module BotHelper
 	# 	id = response.body["hotels"].keys[0]
 	# 	return "http://www.priceline.com/hotel/hotelOverviewGuide.do?propID=" + id.to_s, response.body["hotels"].first[1]["merchPrice"]
 	# end
+
+	def get_coordinates(place)
+		data = Geocoder.search(place)
+		data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
+	end
 end

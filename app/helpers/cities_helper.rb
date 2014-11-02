@@ -10,11 +10,6 @@ module CitiesHelper
 		return "http://www.priceline.com/hotel/hotelOverviewGuide.do?propID=" + id.to_s, response.body["hotels"].first[1]["merchPrice"]
 	end
 
-	def get_coordinates(place)
-		data = Geocoder.search(place)
-		data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
-	end
-
 	def getMapUrl (coordinates)
 		center = Geocoder::Calculations.geographic_center(coordinates)
 		urlString = "https://maps.googleapis.com/maps/api/staticmap?"
@@ -34,6 +29,7 @@ module CitiesHelper
 		distances = []
 		City.all.each do |city|
 			distance = distance_between(center, [city.latitude, city.longitude])
+			binding.pry
 			if !distance.nan?
 				distances << {id: city.id, distance: distance}
 			else
