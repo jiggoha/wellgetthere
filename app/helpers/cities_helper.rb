@@ -50,8 +50,6 @@ module CitiesHelper
 				counter += 1
 			end
 		end
-		puts counter
-		puts distances.length
 		distances = distances.sort_by{|element| element[:distance]}
 		first = distances.first
 		City.find(first[:id])

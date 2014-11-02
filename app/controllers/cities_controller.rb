@@ -26,8 +26,7 @@ class CitiesController < ApplicationController
 			entertainment = get_entertainment(google_places_client, @resultingPlace)
 
 			groupme_client = GroupMe::Client.new(:token => ACCESS_TOKEN)
-			# @counter = 1
-			if !@resultingPlace.nil?
+		
 					sleep(2)
 					priceline = get_hotel_information(@resultingPlace, Date.new(2014, 11, 7), 3)
 					priceline_link = priceline[0]
@@ -38,6 +37,5 @@ class CitiesController < ApplicationController
 					uri = URI(BASE_URL + '/bots/post')
 					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message, picture_url: @pictureUrl})
 				
-			end
 	end
 end

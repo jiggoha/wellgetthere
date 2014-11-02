@@ -22,7 +22,7 @@ class BotController < ApplicationController
 				output_text = "Could you be more specific? Do you mean one of the following: "
 				ending = [3, result.length].min
 				result[0..ending-1].each do |city|
-					output_text += "\n"
+					output_text += "\n\t"
 					output_text += city[:name]
 				end
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text:  output_text})
