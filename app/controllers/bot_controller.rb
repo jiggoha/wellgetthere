@@ -10,19 +10,19 @@ class BotController < ApplicationController
 		uri = URI(BASE_URL + '/bots/post')
 		if @message.split()[0] == '\\location'
 			location = @message.split()[1..-1].join(' ')
-			data = Geocoder.search(place)
+			data = Geocoder.search(location)
 			result = data.map{|i| {name: i.data["formatted_address"], latitude: i.data["geometry"]["location"]["lat"], longitude: i.data["geometry"]["location"]["lng"]}}
 			if result.length == 0
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Sure you typed that right? I couldn't find " + location + "."})
 			elsif result.length == 1	
 				Incomings.create(text: result[0][:name], state: "confirmed")
-				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Thanks, " + name + "! I've got your location as " + result[0][:name] })
+				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: "Thanks, " + params[:name] + "! I've got your location as " + result[0][:name] })
 			else
 				output_text = "Could you be more specific? Do you mean one of the following: "
 				ending = [3, result.length].min
-				result[0..ending].each do |city|
+				result[0..ending-1].each do |city|
 					output_text += "\n"
-					output_text += city.name
+					output_text += city[:name]
 				end
 				Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text:  output_text})
 			end
