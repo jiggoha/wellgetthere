@@ -18,6 +18,8 @@ class CitiesController < ApplicationController
 				y.destroy
 			end
 			@resultingPlace = find_destination(@locations, 1)
+			@pictureUrl = getMapUrl(@locations)
+
 			@client = GroupMe::Client.new(:token => ACCESS_TOKEN)
 			@counter = 1
 			if !@resultingPlace.nil?
@@ -27,7 +29,7 @@ class CitiesController < ApplicationController
 					priceline_cost = priceline[1]
 					bot_message = "All right, the best place to meet up is " + @resultingPlace.city_state + ". \“I’m broke\” is also not an excuse, because you can get a dead cheap hotel room at Priceline here for $" + priceline_cost.round(3).to_s + ": " + priceline_link
 					uri = URI(BASE_URL + '/bots/post')
-					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message})
+					Net::HTTP.post_form(uri, {bot_id: BOT_ID_GetMeThere, text: bot_message, picture_url: @pictureUrl})
 
 					#@client.create_message(ENV['GROUP_ID'], "Calculated option number " + @counter.to_s + ": " + nameOfPlace + "\n")
 
