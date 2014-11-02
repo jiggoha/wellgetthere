@@ -51,18 +51,20 @@ module CitiesHelper
 	def find_destination(coordinates, num_results)
 		center = Geocoder::Calculations.geographic_center(coordinates)
 		distances = []
+		counter = 0
 		City.all.each do |city|
 			distance = distance_between(center, [city.latitude, city.longitude])
 			binding.pry
 			if !distance.nan?
 				distances << {id: city.id, distance: distance}
 			else
-				puts city.name
+				counter += 1
 			end
 		end
+		puts counter
 		distances = distances.sort_by{|element| element[:distance]}
-		distances = distances[0..num_results-1].map{|i| i[:id] }
-		City.find(distances[0])
+		first = distances.first
+		City.find(first[:id])
 		# distances.map{|id| City.find(id).city_state}
 	end
 
